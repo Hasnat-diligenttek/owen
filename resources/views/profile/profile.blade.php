@@ -124,50 +124,38 @@
                                 CREDIT CARD
                             </h6>
                         </div>
-                        <div class="card-body">
-                            <form class="contact-form bg-transparent py-0">
-                                <div class="mb-3">
-                                    <label for="cardType" class="form-label">CREDIT CARD TYPE *</label>
-                                    <select class="form-select" id="cardType" aria-label="Default select example">
-                                        <option selected>Visa</option>
-                                        <option value="1">MasterCard</option>
-                                        <option value="2">American Express</option>
-                                        <option value="3">Discover</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="exampleInputLname" class="form-label">NAME ON CARD *</label>
-                                    <input type="text" class="form-control" id="exampleInputLname">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">CREDIT CARD NUMBER *</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1">
-                                </div>
-                                <div class="row">
-                                    <div class="col mb-3">
-                                        <label for="exampleInputPassword1" class="form-label">EXPIRATION DATE *
-                                        </label>
-                                        <select class="form-select" id="cardType" aria-label="Default select example">
+                        <form method="post" action="{{url('update_paymentinfo')}}">
+                            @csrf    
+                            <div class="card-body">
+                                <form class="contact-form bg-transparent py-0">
+                                    <div class="mb-3">
+                                        <label for="cardType" class="form-label">CREDIT CARD TYPE *</label>
+                                        <select name="type" class="form-select" id="cardType" aria-label="Default select example">
                                             <option selected>Visa</option>
-                                            <option value="1">MasterCard</option>
-                                            <option value="2">American Express</option>
-                                            <option value="3">Discover</option>
+                                            <option value="1" {{$payment_information->type == 1 ? 'selected' : ''}}>MasterCard</option>
+                                            <option value="2" {{$payment_information->type == 2 ? 'selected' : ''}}>American Express</option>
+                                            <option value="3" {{$payment_information->type == 3 ? 'selected' : ''}}>Discover</option>
                                         </select>
                                     </div>
-                                    <div class="col mb-3">
-                                        <label for="exampleInputPassword1" class="form-label mb-4">
-                                        </label>
-                                        <select class="form-select" id="cardType" aria-label="Default select example">
-                                            <option selected>Visa</option>
-                                            <option value="1">MasterCard</option>
-                                            <option value="2">American Express</option>
-                                            <option value="3">Discover</option>
-                                        </select>
+                                    <div class="mb-3">
+                                        <label for="exampleInputLname" class="form-label">NAME ON CARD *</label>
+                                        <input value="{{$payment_information->card_name}}" name="card_name" type="text" class="form-control" id="exampleInputLname">
                                     </div>
-                                </div>
-                                <button type="submit" class="my-btn w-100">Save Changes</button>
-                            </form>
-                        </div>
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">CREDIT CARD NUMBER *</label>
+                                        <input value="{{$payment_information->card_number}}" name="card_number" type="number" class="form-control" id="exampleInputEmail1">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col mb-3">
+                                            <label for="exampleInputPassword1" class="form-label">EXPIRATION DATE *</label>
+                                            <input value="{{$payment_information->exp_date}}" name="exp_date" type="date" class="form-control" id="exampleInputEmail1">
+
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="my-btn w-100">Save Changes</button>
+                                </form>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="nav-address" role="tabpanel" aria-labelledby="nav-contact-tab">
@@ -260,35 +248,38 @@
                 <h1 class="modal-title fs-5 fw-semibold" id="exampleModalLabel">EDIT CONTACT INFORMATION</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+        <form method="post" action="{{route('update_account')}}">
+            @csrf        
             <div class="modal-body">
                 <form class="contact-form bg-transparent py-0">
                     <div class="mb-3">
                         <label for="exampleInputFname" class="form-label">FIRST NAME *</label>
-                        <input type="text" class="form-control" id="exampleInputFname" value="{{ Auth::user()->name }}">
+                        <input name="name" type="text" class="form-control" id="exampleInputFname" value="{{ Auth::user()->name }}">
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputLname" class="form-label">LAST NAME *</label>
-                        <input type="text" class="form-control" id="exampleInputLname" value="{{ Auth::user()->lastname }}">
+                        <input name="lastname" type="text" class="form-control" id="exampleInputLname" value="{{ Auth::user()->lastname }}">
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">EMAIL *</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" value="{{ Auth::user()->email }}">
+                        <input name="email" type="email" class="form-control" id="exampleInputEmail1" value="{{ Auth::user()->email }}">
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">ORGANIZATION *</label>
-                        <input type="text" class="form-control" id="exampleInputPasssword1">
+                        <input name="organization" type="text" class="form-control" id="exampleInputPasssword1" value="{{ Auth::user()->lastname }}">
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">NEW PASSWORD *</label>
-                        <input type="text" class="form-control" id="exampleInputPasssword1">
+                        <input name="password" type="password" class="form-control" id="exampleInputPasssword1">
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">CONFIRM PASSWORD *</label>
-                        <input type="text" class="form-control" id="exampleInputPasssword1">
+                        <input name="confirmed" type="password" class="form-control" id="exampleInputPasssword1">
                     </div>
                     <button type="submit" class="my-btn w-100">Save Changes</button>
                 </form>
             </div>
+        </form>
         </div>
     </div>
 </div>
@@ -302,7 +293,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="contact-form bg-transparent py-0" action="{{ url('update_address') }}" method="POST">
+                <form class="contact-form bg-transparent py-0" action="{{ url('update_billing_address') }}" method="POST">
                     @csrf
                     <input type="hidden" name="type" value="0" id="type">
                     <div class="row">
@@ -334,12 +325,7 @@
                         </div>
                         <div class="col mb-3">
                             <label for="exampleInputLname" class="form-label">STATE *</label>
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Open this select menu</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
+                            <input type="text" class="form-control" name="state" id="exampleInputFname" value="{{ @$primary_bill_address->state }}">
                         </div>
                     </div>
                     <div class="row">
@@ -390,7 +376,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="contact-form bg-transparent py-0" action="{{ url('update_address') }}" method="POST">
+                <form class="contact-form bg-transparent py-0" action="{{ url('update_shipping_address') }}" method="POST">
                     @csrf
                     <input type="hidden" name="type" value="1" id="type">
                     <div class="row">
@@ -422,12 +408,7 @@
                         </div>
                         <div class="col mb-3">
                             <label for="exampleInputLname" class="form-label">STATE *</label>
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Open this select menu</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
+                            <input type="text" class="form-control" name="state" id="exampleInputFname" value="{{ @$primary_ship_address->state }}">
                         </div>
                     </div>
                     <div class="row">

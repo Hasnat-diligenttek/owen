@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Virtual_funding;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WebsiteController;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,8 +83,16 @@ Route::post('/create_account', [ProfileController::class, 'create_account']);
 
 Route::post('/profile_login', [ProfileController::class, 'profile_login']);
 
-Route::post('/update_address', [ProfileController::class, 'update_address']);
+
 Route::get('/b_logout', [ProfileController::class, 'logout']);
+
+Route::post('/update_account', [ProfileController::class, 'update_account'])->name('update_account');
+Route::post('/update_billing_address', [ProfileController::class, 'update_billing_address']);
+Route::post('/update_shipping_address', [ProfileController::class, 'update_shipping_address']);
+Route::post('/update_paymentinfo', [PaymentController::class, 'update_paymentinfo']);
+Route::post('/edit_paymentinfo/{id}', [PaymentController::class, 'edit_paymentinfo']);
+
+
 
 
 // Route::controller(Virtual_funding::class)->middleware('virtual_login')->group(function(){
@@ -109,6 +118,7 @@ Route::controller(Virtual_funding::class)->group(function(){
     Route::get('/edit_event/{id}', 'edit_event');
 
     Route::post('/update_profile', 'update_profile');
+
 
     Route::post('/join_event_code', 'join_event_code');
 
